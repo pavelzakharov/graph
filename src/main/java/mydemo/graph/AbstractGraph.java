@@ -1,27 +1,26 @@
 package mydemo.graph;
 
 import mydemo.Graph;
-import mydemo.GraphType;
 import mydemo.graph.specifics.Specifics;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public abstract class AbstractGraph<V> implements Graph<V> {
     private static final String LOOPS_NOT_ALLOWED = "loops not allowed";
 
-    private GraphType type;
+    private boolean directed;
     private Specifics<V> specifics;
     private EdgesSpecifics<V> edgesSpecifics;
-    private transient Set<V> unmodifiableVertexSet = null;
 
-    protected AbstractGraph(GraphType type) {
-        this.type = Objects.requireNonNull(type);
+    protected AbstractGraph(boolean directed) {
+        this.directed = directed;
 
         GraphSpecificsStrategy<V> graphSpecificsStrategy = new GraphSpecificsStrategyImpl<>();
 
-        this.specifics = graphSpecificsStrategy.getSpecificsFactory().apply(this, type);
-        this.edgesSpecifics = graphSpecificsStrategy.getEdgesSpecificsFactory().apply(type);
+        this.specifics = graphSpecificsStrategy.getSpecificsFactory(directed).apply(this);
+        this.edgesSpecifics = new EdgesSpecificsImpl<V>(new HashSet<Edge<V>>());
     }
 
     @Override
@@ -64,13 +63,11 @@ public abstract class AbstractGraph<V> implements Graph<V> {
     }
 
     @Override
-    public V getEdgeSource(Edge<V> e)
-    {
+    public V getEdgeSource(Edge<V> e) {
         return e.source;
     }
 
-    public V getEdgeTarget(Edge<V> e)
-    {
+    public V getEdgeTarget(Edge<V> e) {
         return e.target;
     }
 
@@ -85,9 +82,13 @@ public abstract class AbstractGraph<V> implements Graph<V> {
     }
 
     @Override
-    public Set<Edge<V>> outgoingEdgesOf(V vertex)
-    {
+    public Set<Edge<V>> outgoingEdgesOf(V vertex) {
         assertVertexExist(vertex);
         return specifics.outgoingEdgesOf(vertex);
+    }
+
+    @Override
+    public boolean isDirected() {
+        return directed;
     }
 }

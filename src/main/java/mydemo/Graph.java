@@ -5,6 +5,8 @@ import mydemo.graph.Edge;
 import java.util.Set;
 
 public interface Graph<V> {
+    boolean isDirected();
+
     Edge<V> addEdge(V sourceVertex, V targetVertex);
 
     boolean addVertex(V v);
