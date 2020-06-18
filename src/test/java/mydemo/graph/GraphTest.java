@@ -13,12 +13,12 @@ public class GraphTest {
     public void testUndirectedGraph() {
         Graph<String> graph = createUndirectedGraph();
         List<Edge<String>> edgeListAB = PathAlgorithmImpl.findPathBetween(graph, "A", "B").getEdgeList();
-        Assertions.assertTrue(edgeListAB != null && edgeListAB.size() == 1, "Edge<String>list has wrong size");
+        Assertions.assertTrue(edgeListAB != null && edgeListAB.size() == 1, "Edge list has wrong size");
         Edge<String> edgeAB = edgeListAB.get(0);
         Assertions.assertTrue(edgeAB.getSource().equals("A") && edgeAB.getTarget().equals("B"));
 
         List<Edge<String>> edgeListDC = PathAlgorithmImpl.findPathBetween(graph, "D", "C").getEdgeList();
-        Assertions.assertTrue(edgeListDC != null && edgeListDC.size() == 2, "Edge<String>list has wrong size");
+        Assertions.assertTrue(edgeListDC != null && edgeListDC.size() == 2, "Edge list has wrong size");
         Edge<String>edgeDB = edgeListDC.get(0);
         Assertions.assertTrue(edgeDB.getSource().equals("B") && edgeDB.getTarget().equals("D"));
         Edge<String>edgeBC = edgeListDC.get(1);
@@ -29,7 +29,7 @@ public class GraphTest {
     public void testDirectedGraph() {
         Graph<String> graph = createDirectedGraph();
         List<Edge<String>> edgeListAB = PathAlgorithmImpl.findPathBetween(graph, "A", "B").getEdgeList();
-        Assertions.assertTrue(edgeListAB != null && edgeListAB.size() == 1, "Edge<String>list has wrong size");
+        Assertions.assertTrue(edgeListAB != null && edgeListAB.size() == 1, "Edge list has wrong size");
         Edge<String> edgeAB = edgeListAB.get(0);
         Assertions.assertTrue(edgeAB.getSource().equals("A") && edgeAB.getTarget().equals("B"));
 
@@ -37,7 +37,7 @@ public class GraphTest {
         Assertions.assertNull(pathDC, "No path should be found");
 
         List<Edge<String>> edgeListAD = PathAlgorithmImpl.findPathBetween(graph, "A", "D").getEdgeList();
-        Assertions.assertTrue(edgeListAD != null && edgeListAD.size() == 2, "Edge<String>list has wrong size");
+        Assertions.assertTrue(edgeListAD != null && edgeListAD.size() == 2, "Edge list has wrong size");
         Assertions.assertEquals(edgeListAD.get(0), edgeAB);
         Edge<String> edgeBD = edgeListAD.get(1);
         Assertions.assertTrue(edgeBD.getSource().equals("B") && edgeBD.getTarget().equals("D"));

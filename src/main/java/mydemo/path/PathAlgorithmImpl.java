@@ -18,7 +18,7 @@ public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
     }
 
     @Override
-    public SingleSourcePaths<V> getPaths(V source) {
+    public SingleSourcePaths<V> getPaths(V source, V sink) {
         if (!graph.containsVertex(source)) {
             throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SOURCE_VERTEX);
         }
@@ -29,13 +29,19 @@ public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
         Deque<V> queue = new ArrayDeque<>();
         queue.add(source);
 
-        while (!queue.isEmpty()) {
+        boolean sinkReached = source.equals(sink);
+
+        while (!queue.isEmpty() && !sinkReached) {
             V v = queue.poll();
             for (Edge<V> e : graph.outgoingEdgesOf(v)) {
                 V u = graph.getOppositeVertex(e, v);
                 if (!sourceAndPredecessorEdgeMap.containsKey(u)) {
                     queue.add(u);
                     sourceAndPredecessorEdgeMap.put(u, e);
+                    if (u.equals(sink)) {
+                        sinkReached = true;
+                        break;
+                    }
                 }
             }
         }
@@ -49,7 +55,7 @@ public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
         if (!graph.containsVertex(sink)) {
             throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SINK_VERTEX);
         }
-        return getPaths(source).getPath(sink);
+        return getPaths(source, sink).getPath(sink);
     }
 
     public static <V> GraphPath<V> findPathBetween(Graph<V> graph, V source, V sink) {
