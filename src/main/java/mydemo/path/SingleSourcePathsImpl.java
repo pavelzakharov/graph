@@ -1,11 +1,7 @@
-package mydemo.alg.path;
+package mydemo.path;
 
-import mydemo.Graph;
-import mydemo.GraphPath;
-import mydemo.Graphs;
-import mydemo.alg.interfaces.PathAlgorithm;
-import mydemo.graph.Edge;
-import mydemo.graph.GraphWalk;
+import mydemo.graph.Graph;
+import mydemo.graph.specifics.Edge;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -38,7 +34,7 @@ public class SingleSourcePathsImpl<V, E> implements PathAlgorithm.SingleSourcePa
 
         while (!cur.equals(source)) {
             edgeList.addFirst(edge);
-            cur = Graphs.getOppositeVertex(graph, edge, cur);
+            cur = graph.getOppositeVertex(edge, cur);
             edge = sourceAndPredecessorEdgeMap.get(cur);
         }
 

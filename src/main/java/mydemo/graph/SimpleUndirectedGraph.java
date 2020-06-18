@@ -1,9 +1,13 @@
 package mydemo.graph;
 
+import mydemo.graph.specifics.UndirectedSpecifics;
+
+import java.util.LinkedHashMap;
+
 public class SimpleUndirectedGraph<V> extends AbstractGraph<V> {
 
     public SimpleUndirectedGraph() {
-        super(false);
+        this.specifics = new UndirectedSpecifics<>(this, new LinkedHashMap<>());
     }
 
 }

@@ -1,17 +1,17 @@
-package mydemo.graph;
+package mydemo.graph.specifics;
 
 import java.util.Objects;
 
 public class Edge<V> {
-    V source;
+    protected V source;
 
-    V target;
+    protected V target;
 
-    protected V getSource() {
+    public V getSource() {
         return source;
     }
 
-    protected V getTarget() {
+    public V getTarget() {
         return target;
     }
 
@@ -23,7 +23,7 @@ public class Edge<V> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Edge)) return false;
+        if (!(o instanceof Edge)) return false;
         Edge<?> edge = (Edge<?>) o;
         return Objects.equals(getSource(), edge.getSource()) &&
                 Objects.equals(getTarget(), edge.getTarget());

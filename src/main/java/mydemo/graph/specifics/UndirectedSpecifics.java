@@ -1,7 +1,6 @@
 package mydemo.graph.specifics;
 
-import mydemo.Graph;
-import mydemo.graph.Edge;
+import mydemo.graph.Graph;
 
 import java.util.Map;
 import java.util.Objects;
@@ -48,28 +47,12 @@ public class UndirectedSpecifics<V> implements Specifics<V> {
     }
 
     private boolean isEqualsStraightOrInverted(Object sourceVertex, Object targetVertex, Edge<V> e) {
-        boolean equalStraight = sourceVertex.equals(graph.getEdgeSource(e))
-                && targetVertex.equals(graph.getEdgeTarget(e));
+        boolean equalStraight = sourceVertex.equals(e.getSource())
+                && targetVertex.equals(e.getTarget());
 
-        boolean equalInverted = sourceVertex.equals(graph.getEdgeTarget(e))
-                && targetVertex.equals(graph.getEdgeSource(e));
+        boolean equalInverted = sourceVertex.equals(e.getTarget())
+                && targetVertex.equals(e.getSource());
         return equalStraight || equalInverted;
-    }
-
-    @Override
-    public boolean addEdgeToTouchingVerticesIfAbsent(V sourceVertex, V targetVertex, Edge<V> e) {
-        // lookup for edge with same source and target
-        UndirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
-        for (Edge<V> edge : ec.vertexEdges) {
-            if (isEqualsStraightOrInverted(sourceVertex, targetVertex, edge)) {
-                return false;
-            }
-        }
-
-        // add
-        ec.addEdge(e);
-        getEdgeContainer(targetVertex).addEdge(e);
-        return true;
     }
 
     @Override

@@ -1,11 +1,10 @@
-package mydemo;
+package mydemo.graph;
 
-import mydemo.graph.Edge;
+import mydemo.graph.specifics.Edge;
 
 import java.util.Set;
 
 public interface Graph<V> {
-    boolean isDirected();
 
     Edge<V> addEdge(V sourceVertex, V targetVertex);
 
@@ -15,9 +14,7 @@ public interface Graph<V> {
 
     Edge<V> getEdge(V sourceVertex, V targetVertex);
 
-    V getEdgeSource(Edge<V> e);
-
-    V getEdgeTarget(Edge<V> e);
-
     Set<Edge<V>> outgoingEdgesOf(V vertex);
+
+    V getOppositeVertex(Edge<V> e, V v);
 }

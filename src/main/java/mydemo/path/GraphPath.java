@@ -1,6 +1,7 @@
-package mydemo;
+package mydemo.path;
 
-import mydemo.graph.Edge;
+import mydemo.graph.Graph;
+import mydemo.graph.specifics.Edge;
 
 import java.util.List;
 

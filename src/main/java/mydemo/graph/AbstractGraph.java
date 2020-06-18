@@ -1,26 +1,21 @@
 package mydemo.graph;
 
-import mydemo.Graph;
+import mydemo.graph.specifics.Edge;
+import mydemo.graph.specifics.EdgesSpecifics;
+import mydemo.graph.specifics.EdgesSpecificsImpl;
 import mydemo.graph.specifics.Specifics;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public abstract class AbstractGraph<V> implements Graph<V> {
     private static final String LOOPS_NOT_ALLOWED = "loops not allowed";
 
-    private boolean directed;
-    private Specifics<V> specifics;
+    protected Specifics<V> specifics;
     private EdgesSpecifics<V> edgesSpecifics;
 
-    protected AbstractGraph(boolean directed) {
-        this.directed = directed;
-
-        GraphSpecificsStrategy<V> graphSpecificsStrategy = new GraphSpecificsStrategyImpl<>();
-
-        this.specifics = graphSpecificsStrategy.getSpecificsFactory(directed).apply(this);
-        this.edgesSpecifics = new EdgesSpecificsImpl<V>(new HashSet<Edge<V>>());
+    public AbstractGraph() {
+        this.edgesSpecifics = new EdgesSpecificsImpl<>(new HashSet<>());
     }
 
     @Override
@@ -62,15 +57,6 @@ public abstract class AbstractGraph<V> implements Graph<V> {
         return specifics.getEdge(sourceVertex, targetVertex);
     }
 
-    @Override
-    public V getEdgeSource(Edge<V> e) {
-        return e.source;
-    }
-
-    public V getEdgeTarget(Edge<V> e) {
-        return e.target;
-    }
-
     protected boolean assertVertexExist(V v) {
         if (containsVertex(v)) {
             return true;
@@ -88,7 +74,15 @@ public abstract class AbstractGraph<V> implements Graph<V> {
     }
 
     @Override
-    public boolean isDirected() {
-        return directed;
+    public V getOppositeVertex(Edge<V> e, V v) {
+        V source = e.getSource();
+        V target = e.getTarget();
+        if (v.equals(source)) {
+            return target;
+        } else if (v.equals(target)) {
+            return source;
+        } else {
+            throw new IllegalArgumentException("no such vertex: " + v.toString());
+        }
     }
 }

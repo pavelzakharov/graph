@@ -1,14 +1,11 @@
-package mydemo.alg.path;
+package mydemo.path;
 
-import mydemo.Graph;
-import mydemo.GraphPath;
-import mydemo.Graphs;
-import mydemo.alg.interfaces.PathAlgorithm;
-import mydemo.graph.Edge;
+import mydemo.graph.Graph;
+import mydemo.graph.specifics.Edge;
 
 import java.util.*;
 
-public class PathAlgorithmImpl<V, E> implements PathAlgorithm<V> {
+public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
     private static final String GRAPH_MUST_CONTAIN_THE_SOURCE_VERTEX =
             "Graph must contain the source vertex!";
     private static final String GRAPH_MUST_CONTAIN_THE_SINK_VERTEX =
@@ -26,7 +23,7 @@ public class PathAlgorithmImpl<V, E> implements PathAlgorithm<V> {
             throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SOURCE_VERTEX);
         }
 
-        Map<V, Edge<V>> sourceAndPredecessorEdgeMap = new LinkedHashMap<>();
+        Map<V, Edge<V>> sourceAndPredecessorEdgeMap = new HashMap<>();
         sourceAndPredecessorEdgeMap.put(source, null);
 
         Deque<V> queue = new ArrayDeque<>();
@@ -35,7 +32,7 @@ public class PathAlgorithmImpl<V, E> implements PathAlgorithm<V> {
         while (!queue.isEmpty()) {
             V v = queue.poll();
             for (Edge<V> e : graph.outgoingEdgesOf(v)) {
-                V u = Graphs.getOppositeVertex(graph, e, v);
+                V u = graph.getOppositeVertex(e, v);
                 if (!sourceAndPredecessorEdgeMap.containsKey(u)) {
                     queue.add(u);
                     sourceAndPredecessorEdgeMap.put(u, e);
@@ -55,7 +52,7 @@ public class PathAlgorithmImpl<V, E> implements PathAlgorithm<V> {
         return getPaths(source).getPath(sink);
     }
 
-    public static <V, E> GraphPath<V> findPathBetween(Graph<V> graph, V source, V sink) {
+    public static <V> GraphPath<V> findPathBetween(Graph<V> graph, V source, V sink) {
         return new PathAlgorithmImpl<>(graph).getPath(source, sink);
     }
 }

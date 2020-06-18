@@ -1,8 +1,7 @@
-package mydemo.graph;
+package mydemo.path;
 
-import mydemo.Graph;
-import mydemo.GraphPath;
-import mydemo.Graphs;
+import mydemo.graph.specifics.Edge;
+import mydemo.graph.Graph;
 
 import java.util.*;
 
@@ -18,13 +17,12 @@ public class GraphWalk<V> implements GraphPath<V> {
 
     public GraphWalk(
             Graph<V> graph, V startVertex, V endVertex, List<V> vertexList, List<Edge<V>> edgeList) {
-        // Some necessary but not sufficient conditions for valid paths
         if (vertexList == null && edgeList == null)
             throw new IllegalArgumentException("Vertex list and edge list cannot both be null!");
         if (startVertex != null && vertexList != null && edgeList != null
                 && edgeList.size() + 1 != vertexList.size())
             throw new IllegalArgumentException(
-                    "VertexList and edgeList do not correspond to the same path (cardinality of vertexList +1 must equal the cardinality of the edgeList)");
+                    "VertexList and edgeList do not correspond to the same path (cardinality of edgeList +1 must equal the cardinality of the vertexList)");
         if (startVertex == null ^ endVertex == null)
             throw new IllegalArgumentException(
                     "Either the start and end vertices must both be null, or they must both be not null (one of them is null)");
@@ -83,7 +81,7 @@ public class GraphWalk<V> implements GraphPath<V> {
         V v = this.getStartVertex();
         list.add(v);
         for (Edge<V> e : edgeList) {
-            v = Graphs.getOppositeVertex(g, e, v);
+            v = g.getOppositeVertex(e, v);
             list.add(v);
         }
         return list;

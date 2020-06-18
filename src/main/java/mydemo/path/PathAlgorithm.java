@@ -1,6 +1,4 @@
-package mydemo.alg.interfaces;
-
-import mydemo.GraphPath;
+package mydemo.path;
 
 public interface PathAlgorithm<V> {
     SingleSourcePaths<V> getPaths(V source);

@@ -1,7 +1,6 @@
 package mydemo.graph.specifics;
 
-import mydemo.Graph;
-import mydemo.graph.Edge;
+import mydemo.graph.Graph;
 
 import java.util.Map;
 import java.util.Objects;
@@ -23,7 +22,7 @@ public class DirectedSpecifics<V> implements Specifics<V> {
         // lookup for edge with same source and target
         DirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
         for (Edge<V> e : ec.outgoing) {
-            if (graph.getEdgeTarget(e).equals(targetVertex)) {
+            if (e.getTarget().equals(targetVertex)) {
                 return null;
             }
         }
@@ -48,23 +47,6 @@ public class DirectedSpecifics<V> implements Specifics<V> {
     }
 
     @Override
-    public boolean addEdgeToTouchingVerticesIfAbsent(V sourceVertex, V targetVertex, Edge<V> e) {
-        // lookup for edge with same source and target
-        DirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
-        for (Edge<V> outEdge : ec.outgoing) {
-            if (graph.getEdgeTarget(outEdge).equals(targetVertex)) {
-                return false;
-            }
-        }
-
-        // add
-        ec.addOutgoingEdge(e);
-        getEdgeContainer(targetVertex).addIncomingEdge(e);
-
-        return true;
-    }
-
-    @Override
     public boolean addVertex(V v) {
         DirectedEdgeContainer<V> ec = vertexMap.get(v);
         if (ec == null) {
@@ -85,7 +67,7 @@ public class DirectedSpecifics<V> implements Specifics<V> {
             DirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
 
             for (Edge<V> e : ec.outgoing) {
-                if (graph.getEdgeTarget(e).equals(targetVertex)) {
+                if (e.getTarget().equals(targetVertex)) {
                     return e;
                 }
             }

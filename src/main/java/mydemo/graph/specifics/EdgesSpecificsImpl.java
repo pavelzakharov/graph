@@ -1,4 +1,4 @@
-package mydemo.graph;
+package mydemo.graph.specifics;
 
 import java.util.Objects;
 import java.util.Set;
@@ -21,11 +21,6 @@ public class EdgesSpecificsImpl<V> implements EdgesSpecifics<V> {
 
         edgeSet.add(edge);
         return true;
-    }
-
-    @Override
-    public boolean containsEdge(Edge<V> e) {
-        return edgeSet.contains(e);
     }
 
 }

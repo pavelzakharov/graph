@@ -1,7 +1,5 @@
 package mydemo.graph.specifics;
 
-import mydemo.graph.Edge;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
