@@ -35,7 +35,7 @@ public class UndirectedSpecifics<V> implements Specifics<V> {
         return edge;
     }
 
-    protected UndirectedEdgeContainer<V> getEdgeContainer(V vertex) {
+    private UndirectedEdgeContainer<V> getEdgeContainer(V vertex) {
         UndirectedEdgeContainer<V> ec = vertexMap.get(vertex);
 
         if (ec == null) {
@@ -47,11 +47,11 @@ public class UndirectedSpecifics<V> implements Specifics<V> {
     }
 
     private boolean isEqualsStraightOrInverted(Object sourceVertex, Object targetVertex, Edge<V> e) {
-        boolean equalStraight = sourceVertex.equals(e.getSource())
-                && targetVertex.equals(e.getTarget());
+        boolean equalStraight = sourceVertex.equals(e.source)
+                && targetVertex.equals(e.target);
 
-        boolean equalInverted = sourceVertex.equals(e.getTarget())
-                && targetVertex.equals(e.getSource());
+        boolean equalInverted = sourceVertex.equals(e.target)
+                && targetVertex.equals(e.source);
         return equalStraight || equalInverted;
     }
 

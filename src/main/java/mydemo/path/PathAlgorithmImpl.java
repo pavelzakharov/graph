@@ -5,6 +5,10 @@ import mydemo.graph.specifics.Edge;
 
 import java.util.*;
 
+/**
+ * Uses breadth-first search algorithm to find shortest path between specified vertices
+ * @param <V> vertex type
+ */
 public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
     private static final String GRAPH_MUST_CONTAIN_THE_SOURCE_VERTEX =
             "Graph must contain the source vertex!";
@@ -18,7 +22,11 @@ public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
     }
 
     @Override
-    public SingleSourcePaths<V> getPaths(V source, V sink) {
+    public GraphPath<V> getPath(V source, V sink) {
+
+        if (!graph.containsVertex(sink)) {
+            throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SINK_VERTEX);
+        }
         if (!graph.containsVertex(source)) {
             throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SOURCE_VERTEX);
         }
@@ -46,16 +54,7 @@ public class PathAlgorithmImpl<V> implements PathAlgorithm<V> {
             }
         }
 
-        return new SingleSourcePathsImpl<>(graph, source, sourceAndPredecessorEdgeMap);
-    }
-
-    @Override
-    public GraphPath<V> getPath(V source, V sink) {
-
-        if (!graph.containsVertex(sink)) {
-            throw new IllegalArgumentException(GRAPH_MUST_CONTAIN_THE_SINK_VERTEX);
-        }
-        return getPaths(source, sink).getPath(sink);
+        return new SingleSourcePathsImpl<>(graph, source, sourceAndPredecessorEdgeMap).getPath(sink);
     }
 
     public static <V> GraphPath<V> findPathBetween(Graph<V> graph, V source, V sink) {

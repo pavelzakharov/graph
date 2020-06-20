@@ -22,7 +22,7 @@ public class DirectedSpecifics<V> implements Specifics<V> {
         // lookup for edge with same source and target
         DirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
         for (Edge<V> e : ec.outgoing) {
-            if (e.getTarget().equals(targetVertex)) {
+            if (e.target.equals(targetVertex)) {
                 return null;
             }
         }
@@ -35,7 +35,7 @@ public class DirectedSpecifics<V> implements Specifics<V> {
         return edge;
     }
 
-    protected DirectedEdgeContainer<V> getEdgeContainer(V vertex) {
+    private DirectedEdgeContainer<V> getEdgeContainer(V vertex) {
         DirectedEdgeContainer<V> ec = vertexMap.get(vertex);
 
         if (ec == null) {
@@ -67,7 +67,7 @@ public class DirectedSpecifics<V> implements Specifics<V> {
             DirectedEdgeContainer<V> ec = getEdgeContainer(sourceVertex);
 
             for (Edge<V> e : ec.outgoing) {
-                if (e.getTarget().equals(targetVertex)) {
+                if (e.target.equals(targetVertex)) {
                     return e;
                 }
             }

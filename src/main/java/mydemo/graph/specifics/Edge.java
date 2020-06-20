@@ -3,17 +3,9 @@ package mydemo.graph.specifics;
 import java.util.Objects;
 
 public class Edge<V> {
-    protected V source;
+    V source;
 
-    protected V target;
-
-    public V getSource() {
-        return source;
-    }
-
-    public V getTarget() {
-        return target;
-    }
+    V target;
 
     @Override
     public String toString() {
@@ -25,12 +17,12 @@ public class Edge<V> {
         if (this == o) return true;
         if (!(o instanceof Edge)) return false;
         Edge<?> edge = (Edge<?>) o;
-        return Objects.equals(getSource(), edge.getSource()) &&
-                Objects.equals(getTarget(), edge.getTarget());
+        return Objects.equals(source, edge.source) &&
+                Objects.equals(target, edge.target);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSource(), getTarget());
+        return Objects.hash(source, target);
     }
 }

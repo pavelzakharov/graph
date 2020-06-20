@@ -23,4 +23,18 @@ public class EdgesSpecificsImpl<V> implements EdgesSpecifics<V> {
         return true;
     }
 
+    public V getEdgeSource(Edge<V> e) {
+        if (!edgeSet.contains(e)) {
+            throw new IllegalArgumentException("no such edge in graph: " + e.toString());
+        }
+        return e.source;
+    }
+
+    public V getEdgeTarget(Edge<V> e) {
+        if (!edgeSet.contains(e)) {
+            throw new IllegalArgumentException("no such edge in graph: " + e.toString());
+        }
+        return e.target;
+    }
+
 }

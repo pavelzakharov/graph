@@ -57,7 +57,7 @@ public abstract class AbstractGraph<V> implements Graph<V> {
         return specifics.getEdge(sourceVertex, targetVertex);
     }
 
-    protected boolean assertVertexExist(V v) {
+    private boolean assertVertexExist(V v) {
         if (containsVertex(v)) {
             return true;
         } else if (v == null) {
@@ -75,8 +75,8 @@ public abstract class AbstractGraph<V> implements Graph<V> {
 
     @Override
     public V getOppositeVertex(Edge<V> e, V v) {
-        V source = e.getSource();
-        V target = e.getTarget();
+        V source = edgesSpecifics.getEdgeSource(e);
+        V target = edgesSpecifics.getEdgeTarget(e);
         if (v.equals(source)) {
             return target;
         } else if (v.equals(target)) {
@@ -84,5 +84,18 @@ public abstract class AbstractGraph<V> implements Graph<V> {
         } else {
             throw new IllegalArgumentException("no such vertex: " + v.toString());
         }
+    }
+
+    @Override
+    public V getEdgeSource(Edge<V> e) {
+        return edgesSpecifics.getEdgeSource(e);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public V getEdgeTarget(Edge<V> e) {
+        return edgesSpecifics.getEdgeTarget(e);
     }
 }
